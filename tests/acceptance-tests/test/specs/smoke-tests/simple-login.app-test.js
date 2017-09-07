@@ -1,9 +1,11 @@
 "use strict";
+const dotenv = require("dotenv");
 const yaml = require("js-yaml");
 const fs   = require("fs");
 const expect = require("chai").expect;
 const getId = require("../../../lib/get-elements.js");
 
+dotenv.config();
 beforeEach(function () {
   const browserConfig = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/config/settings.yml", "utf8"));
   const baseUrl = browserConfig.base_url.toString();
