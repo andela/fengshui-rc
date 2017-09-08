@@ -1,14 +1,15 @@
 "use strict";
 const yaml = require("js-yaml");
 const fs   = require("fs");
-
+const dotenv = require("dotenv");
+dotenv.config();
 const eleMap = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-map.yml", "utf8"));
-const usrData = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/config/user-data.yml", "utf8"));
 const browserConfig = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/config/settings.yml", "utf8"));
 
-// default to process env if we've got that
-const adminEmail = process.env.REACTION_EMAIL || usrData.admin_email;
-const adminPassword = process.env.REACTION_AUTH || usrData.admin_pw;
+const adminEmail = process.env.REACTION_EMAIL;
+const adminPassword = process.env.REACTION_AUTH;
+const guestPassword = process.env.GUEST_PASSWORD;
+const guestEmail = process.env.GUEST_EMAIL;
 
 module.exports = {
   UserActions: {
@@ -20,8 +21,8 @@ module.exports = {
         browser.setValue(eleMap.login_pw_fld, adminPassword);
       }
       if (user === "guest") {
-        browser.setValue(eleMap.login_email_fld, usrData.guest_email);
-        browser.setValue(eleMap.login_pw_fld, usrData.guest_pw);
+        browser.setValue(eleMap.login_email_fld, guestEmail);
+        browser.setValue(eleMap.login_pw_fld, guestPassword);
       }
       browser.click(eleMap.login_btn);
       browser.pause("5000");
@@ -49,7 +50,7 @@ module.exports = {
       const ep = (new Date).getTime();
       const email = ep + "email@reactioncommerce.com";
       browser.setValue(eleMap.pl_email_address_fld, email);
-      browser.setValue(eleMap.pl_password_fld, usrData.guest_pw);
+      browser.setValue(eleMap.pl_password_fld, guestPassword);
       browser.click(eleMap.pl_register_lnk);
       browser.pause(2000);
       browser.click(eleMap.pl_register_btn);
