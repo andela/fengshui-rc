@@ -17,6 +17,12 @@ export default function () {
       icon: "fa fa-share-square-o",
       priority: 1,
       container: "utilities"
+    }, {
+      route: "/help",
+      template: "help",
+      name: "help page",
+      workflow: "coreWorkflow",
+      priority: 4
     }]
   });
 }

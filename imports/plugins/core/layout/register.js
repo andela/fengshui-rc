@@ -16,5 +16,9 @@ Reaction.registerPackage({
     icon: "fa fa-object-group",
     priority: 1,
     container: "appearance"
+  }, {
+    route: "/help",
+    template: "help",
+    name: "help page"
   }]
 });
