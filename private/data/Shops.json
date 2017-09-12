@@ -490,6 +490,7 @@
       "OC": "Oceania",
       "SA": "South America"
     },
+    // fill up country currency code here
     "countries": {
       "AD": {
         "name": "Andorra",
@@ -498,6 +499,7 @@
         "continent": "EU",
         "capital": "Andorra la Vella",
         "currency": "EUR",
+        "currencySymbol": "",
         "languages": "ca"
       },
       "AE": {
@@ -1641,6 +1643,7 @@
         "continent": "AF",
         "capital": "Nairobi",
         "currency": "KES",
+        "currencySymbol": "KSh",
         "languages": "en,sw"
       },
       "KG": {
@@ -2082,6 +2085,7 @@
         "continent": "AF",
         "capital": "Abuja",
         "currency": "NGN",
+        "currencySymbol": "#",
         "languages": "en"
       },
       "NI": {
@@ -5177,6 +5181,7 @@
         "continent": "AF",
         "capital": "Abuja",
         "currency": "NGN",
+        "currencySymbol": "#",
         "languages": "en"
       },
       "NI": {

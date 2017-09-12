@@ -15,7 +15,7 @@ xdescribe("braintree/refund/create", function () {
     sandbox.restore();
   });
 
-  it("Should call braintree/refund/create with the proper parameters and return saved = true", function (done) {
+  xit("Should call braintree/refund/create with the proper parameters and return saved = true", function (done) {
     const paymentMethod = {
       processor: "Braintree",
       storedCard: "VISA 4242",
