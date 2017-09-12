@@ -16,7 +16,6 @@ export default function () {
       description: "Routing utilities",
       icon: "fa fa-share-square-o",
       priority: 1,
-      container: "utilities"
-    }]
+      container: "utilities"}]
   });
 }
