@@ -52,14 +52,25 @@ export default {
                 locale.currency.rate = shop.currencies[localeCurrency].rate;
                 localeDep.changed();
               }
+            } else {
+                HTTP.call('GET', 'https://openexchangerates.org/api/latest.json?app_id=02bc6c7946ed4919bcaa927ebf4fff76', 
+                (error, result) => {
+                  if (!error) {
+                    Session.set('twizzled', true);
+                    const localCurrency = locale.locale.currency;
+                    locale.currency.rate = result.data.rates[localCurrency];
+                    locale.currency.format = "%s%v";
+                    locale.currency.symbol = locale.locale.currencySymbol;
+                    // we are looking for a shopCurrency changes here
+                    if (typeof locale.shopCurrency === "object") {
+                      locale.shopCurrency = shop.currencies[shop.currency];
+                      localeDep.changed();
+                    }
+                    return this;
+                  }
+                });
             }
           }
-          // we are looking for a shopCurrency changes here
-          if (typeof locale.shopCurrency === "object") {
-            locale.shopCurrency = shop.currencies[shop.currency];
-            localeDep.changed();
-          }
-          return this;
         }
       }
     });
