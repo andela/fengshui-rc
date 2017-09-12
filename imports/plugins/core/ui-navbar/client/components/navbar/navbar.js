@@ -85,11 +85,11 @@ Template.CoreNavigationBar.helpers({
     };
   },
 
-  helpPageButton() {
+  FAQsPageButton() {
     return {
       component: FlatButton,
       kind: "flat",
-      label: "Help"
+      label: "FAQs"
     };
   }
 });

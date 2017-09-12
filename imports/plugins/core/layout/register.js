@@ -17,8 +17,8 @@ Reaction.registerPackage({
     priority: 1,
     container: "appearance"
   }, {
-    route: "/help",
-    template: "help",
-    name: "help page"
+    route: "/FAQs",
+    template: "FAQs",
+    name: "FAQs"
   }]
 });

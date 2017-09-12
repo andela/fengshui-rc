@@ -3083,7 +3083,7 @@
     "index",
     "cart/checkout",
     "cart/completed",
-    "help"
+    "FAQs"
   ],
   "defaultRoles": [
     "account/profile",
@@ -3093,7 +3093,7 @@
     "index",
     "cart/checkout",
     "cart/completed",
-    "help"
+    "FAQs"
   ]
 }, {
   "_id": "ddzuN2YPvgvx7rJS5",
