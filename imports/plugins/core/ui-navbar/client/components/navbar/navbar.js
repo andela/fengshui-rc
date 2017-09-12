@@ -83,13 +83,5 @@ Template.CoreNavigationBar.helpers({
         playTour();
       }
     };
-  },
-
-  helpPageButton() {
-    return {
-      component: FlatButton,
-      kind: "flat",
-      label: "Help"
-    };
   }
 });
