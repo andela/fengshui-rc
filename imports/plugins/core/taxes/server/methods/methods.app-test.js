@@ -19,7 +19,7 @@ describe("taxes methods", function () {
     sandbox.restore();
   });
 
-  describe("taxes/deleteRate", function () {
+  xdescribe("taxes/deleteRate", function () {
     it("should throw 403 error with taxes permission", function (done) {
       sandbox.stub(Roles, "userIsInRole", () => false);
       // this should actually trigger a whole lot of things
