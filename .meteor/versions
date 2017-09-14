@@ -154,11 +154,8 @@ service-configuration@1.0.11
 session@1.1.7
 sha@1.0.9
 shell-server@0.2.4
-<<<<<<< HEAD
 simple:json-routes@2.1.0
 simple:rest@1.1.1
-=======
->>>>>>> e15d0f0386ff31cc3d078d8789eaa74e9a0862f9
 spacebars@1.0.15
 spacebars-compiler@1.1.2
 srp@1.0.10
