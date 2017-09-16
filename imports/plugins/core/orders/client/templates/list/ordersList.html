@@ -2,14 +2,14 @@
 
 {{#each orders data=data}}
   <div class="panel panel-default order-list-detail">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        <span data-i18n="order.placed">Placed</span>
-        <span>{{orderAge}}</span>
-        <span data-i18n="order.on">on</span>
-        <span>{{dateFormat createdAt format="MMM D h:mm"}}</span>
-      </h3>
-    </div>
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span data-i18n="order.placed">Placed</span>
+          <span>{{orderAge}}</span>
+          <span data-i18n="order.on">on</span>
+          <span>{{dateFormat createdAt format="MMM D h:mm"}}</span>
+        </h3>
+      </div>
     <div class="panel-body">
 
       <div class="row">
@@ -95,9 +95,18 @@
       </div>
 
     </div>
-
-    <div class="panel-footer">
-      {{> ordersListSummary order=.}}
+    
+    <div class="row">
+      <div class="col-xs-9">
+        <div class="panel-footer">
+          {{> ordersListSummary order=.}}
+        </div>
+      </div>
+      <div class="col-xs-3">
+          {{#if isDigital}}
+          <a href="{{downloadUrl}}" download="{{downloadUrl}}" class="btn btn-success download-btn">Download Product</a>
+          {{/if}}
+      </div>
     </div>
   </div>
 
