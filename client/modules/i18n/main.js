@@ -1,6 +1,8 @@
 import i18next from "i18next";
 import { Meteor } from "meteor/meteor";
 import { Tracker } from "meteor/tracker";
+import { Geolocation } from 'meteor/mdg:geolocation';
+import { reverseGeocode } from 'meteor/jaymc:google-reverse-geocode';
 import { SimpleSchema } from "meteor/aldeed:simple-schema";
 import { Reaction } from "/client/api";
 import { Packages, Translations } from "/lib/collections";
@@ -9,6 +11,24 @@ import { Packages, Translations } from "/lib/collections";
 // Reaction i18n Translations, RTL and Currency Exchange Support
 //
 
+const latLng = new ReactiveVar();
+const countrycode = new ReactiveVar();
+Tracker.autorun(function(computation) {
+    latLng.set(Geolocation.latLng());
+    if (latLng.get()) {
+        computation.stop();
+        var lat = latLng.curValue.lat;
+        var lng = latLng.curValue.lng;
+        reverseGeocode.getSecureLocation(lat, lng, function(location) {
+          if ( location.results === undefined) {
+            countrycode.set("US");
+          } else {
+            countrycode.set(location.results[8].address_components[0].short_name);
+          }
+        });
+    }
+})
+
 /**
  * getBrowserLanguage
  * @summary detects device default language
@@ -16,13 +36,13 @@ import { Packages, Translations } from "/lib/collections";
  */
 export function getBrowserLanguage() {
   if (typeof navigator.languages !== "undefined") {
-    if (~navigator.languages[0].indexOf("-")) {
+    if (~navigator.languages[0].indexOf("-")) {  
       return navigator.languages[0].split("-")[0];
-    } else if (~navigator.languages[0].indexOf("_")) {
+    } else if (~navigator.languages[0].indexOf("_")) { 
       return navigator.languages[0].split("_")[0];
-    }
+    } 
     return navigator.languages[0];
-  }
+  } 
   return navigator.language || navigator.browserLanguage;
 }
 
@@ -100,7 +120,7 @@ Meteor.startup(() => {
       }
 
       // use i18n detected language to getLocale info
-      Meteor.call("shop/getLocale", (error, result) => {
+      Meteor.call("shop/getLocale", countrycode.get(), (error, result) => {
         if (result) {
           const locale = result;
           locale.language = getBrowserLanguage();

@@ -490,6 +490,7 @@
       "OC": "Oceania",
       "SA": "South America"
     },
+    // fill up country currency code here
     "countries": {
       "AD": {
         "name": "Andorra",
@@ -498,6 +499,7 @@
         "continent": "EU",
         "capital": "Andorra la Vella",
         "currency": "EUR",
+        "currencySymbol": "",
         "languages": "ca"
       },
       "AE": {
@@ -1641,7 +1643,8 @@
         "continent": "AF",
         "capital": "Nairobi",
         "currency": "KES",
-        "languages": "en,sw"
+        "languages": "en,sw",
+        "currencySymbol": "KSh"
       },
       "KG": {
         "name": "Kyrgyzstan",
@@ -2082,7 +2085,8 @@
         "continent": "AF",
         "capital": "Abuja",
         "currency": "NGN",
-        "languages": "en"
+        "languages": "en",
+        "currencySymbol": "₦",
       },
       "NI": {
         "name": "Nicaragua",
@@ -4736,7 +4740,8 @@
         "continent": "AF",
         "capital": "Nairobi",
         "currency": "KES",
-        "languages": "en,sw"
+        "languages": "en,sw",
+        "currencySymbol": "KSh"
       },
       "KG": {
         "name": "Kyrgyzstan",
@@ -5177,7 +5182,8 @@
         "continent": "AF",
         "capital": "Abuja",
         "currency": "NGN",
-        "languages": "en"
+        "languages": "en",
+        "currencySymbol": "₦"
       },
       "NI": {
         "name": "Nicaragua",
