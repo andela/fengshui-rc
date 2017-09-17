@@ -16,6 +16,6 @@ describe("Product price display", function () {
     browser.waitForExist("#product-title", "5000");
     browser.waitForExist(".currency-symbol", "10000");
     browser.pause("7000");
-    expect(browser.getText(".currency-symbol")).to.contain("#");
+    expect(browser.getText(".currency-symbol")).to.contain("₦");
   });
 });
