@@ -10,24 +10,15 @@ beforeEach(function () {
 });
 
 describe("User", function () {
-  it("should be able to click on a button see faqs page", function () {
-    browser.waitForExist(".search", "5000");
-    browser.click(".search");
-    browser.waitForExist("#search-input", "5000");
-    browser.setValue("#search-input", inputText);
-    browser.waitForExist(".search-tag", "2000");
-    expect(browser.getText(".search-tag")).to.contain("example-product");
-    expect(browser.getText("#product-title")).to.contain("BASIC REACTION PRODUCT");
-  });
-
-  it("should work when a user types `aer` in the search box", function () {
-    const inputText = "aer";
-    browser.waitForExist(".search", "5000");
-    browser.click(".search");
-    browser.waitForExist("#search-input", "5000");
-    browser.setValue("#search-input", inputText);
-    browser.waitForExist("#search-input", "5000");
-    browser.waitForExist("#product-title", "5000");
-    expect(browser.getText("#product-title")).to.contain("AEROPLANE");
+  it("should be able to click on the faqs button see the faqs page", function () {
+    browser.waitForExist(".faqs-button", "5000");
+    browser.waitForExist("#faqs", "5000");
+    browser.click("#faqs");
+    browser.pause("10000");
+    browser.waitForExist(".faqs-header", "5000");
+    browser.waitForExist(".faqs-question", "5000");
+    browser.waitForExist(".faqs-answer", "2000");
+    browser.waitForVisible(".faqs-header", 5000);
+    expect(browser.getText(".faqs-header")).to.equal("Frequently Asked Questions (FAQs)");
   });
 });
