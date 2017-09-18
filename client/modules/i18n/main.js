@@ -17,13 +17,14 @@ Tracker.autorun(function(computation) {
     latLng.set(Geolocation.latLng());
     if (latLng.get()) {
         computation.stop();
-        var lat = latLng.curValue.lat;
-        var lng = latLng.curValue.lng;
+        const lat = latLng.curValue.lat;
+        const lng = latLng.curValue.lng;      
         reverseGeocode.getSecureLocation(lat, lng, function(location) {
           if ( location.results === undefined) {
             countrycode.set("US");
           } else {
-            countrycode.set(location.results[8].address_components[0].short_name);
+            countryDetailsLocation = location.results.length - 1;          
+            countrycode.set(location.results[countryDetailsLocation].address_components[0].short_name);
           }
         });
     }
