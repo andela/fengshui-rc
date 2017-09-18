@@ -127,6 +127,7 @@ mongo@1.1.22
 mongo-id@1.0.6
 mongo-livedata@1.0.12
 mrt:later@1.6.1
+nimble:restivus@0.8.12
 npm-bcrypt@0.9.3
 npm-mongo@2.2.30
 oauth@1.1.13

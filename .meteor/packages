@@ -103,3 +103,4 @@ twitter-config-ui
 dynamic-import
 abernix:standard-minifier-js
 simple:rest
+nimble:restivus
