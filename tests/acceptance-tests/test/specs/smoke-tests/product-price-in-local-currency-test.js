@@ -11,7 +11,6 @@ beforeEach(function () {
 
 describe("Product price display", function () {
   it("should display product in users local currency", function () {
-    const localCurrency = "#";
     browser.waitForExist(".rui", "5000");
     browser.waitForExist("#product-title", "5000");
     browser.waitForExist(".currency-symbol", "10000");
