@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Template } from "meteor/templating";
-import { Orders, Shops } from "/lib/collections";
 import { i18next } from "/client/api";
+import { Orders, Shops, Products } from "/lib/collections";
 
 /**
  * dashboardOrdersList helpers
@@ -15,6 +15,24 @@ Template.dashboardOrdersList.helpers({
       return "Canceled";
     }
     return i18next.t("order.processing");
+  },
+  isDigital() {
+    const productId = this.items[0].productId;
+    const sub = Meteor.subscribe("Product", productId);
+    if (sub.ready()) {
+      const product = Products.findOne(productId);
+      return product.isDigital;
+    }
+    return null;
+  },
+  downloadUrl() {
+    const productId = this.items[0].productId;
+    const sub = Meteor.subscribe("Product", productId);
+    if (sub.ready()) {
+      const product = Products.findOne(productId);
+      return product.downloadUrl;
+    }
+    return null;
   },
   orders(data) {
     if (data.hash.data) {
