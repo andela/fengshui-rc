@@ -33,6 +33,8 @@ service-configuration@1.0.11
 amplify
 mdg:validated-method
 shell-server@0.2.4
+mdg:geolocation
+jaymc:google-reverse-geocode
 
 
 # Meteor Auth Packages

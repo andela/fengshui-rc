@@ -1,8 +1,10 @@
 import accounting from "accounting-js";
 import { Meteor } from "meteor/meteor";
+import { Tracker } from 'meteor/tracker';
 import { Template } from "meteor/templating";
 import { localeDep, i18nextDep } from  "./main";
 import { Reaction, Logger, i18next } from "/client/api";
+
 
 /**
  * formatPriceString
@@ -40,9 +42,8 @@ export function formatPriceString(formatPrice) {
         throw new Meteor.Error("exchangeRateUndefined");
       }
       prices[i] *= locale.currency.rate;
-
       price = _formatPrice(price, originalPrice, prices[i],
-        currentPrice, locale.currency, i, len);
+        currentPrice, { format: locale.currency.format, symbol: locale.currency.symbol }, i, len);
     } catch (error) {
       Logger.debug("currency error, fallback to shop currency");
       price = _formatPrice(price, originalPrice, prices[i],
@@ -87,6 +88,7 @@ export function formatNumber(currentPrice) {
  */
 function _formatPrice(price, originalPrice, actualPrice, currentPrice, currency,
   pos, len) {
+
   // this checking for locale.shopCurrency mostly
   if (typeof currency !== "object") {
     return false;
@@ -95,12 +97,12 @@ function _formatPrice(price, originalPrice, actualPrice, currentPrice, currency,
   let adjustedPrice = actualPrice;
   let formattedPrice;
 
-  // Precision is mis-used in accounting js. Scale is the propery term for number
+  // Precision is mis-used in accounting js. Scale is the property term for number
   // of decimal places. Let's adjust it here so accounting.js does not break.
   if (currency.scale !== undefined) {
-    currency.precision = currency.scale;
+    currency.precision = currency.scale;  
   }
-
+  
   // If there are no decimal places, in the case of the Japanese Yen, we adjust it here.
   if (currency.scale === 0) {
     adjustedPrice = actualPrice * 100;
@@ -115,6 +117,7 @@ function _formatPrice(price, originalPrice, actualPrice, currentPrice, currency,
       symbol: ""
     });
     formattedPrice = accounting.formatMoney(adjustedPrice, modifiedCurrency);
+    
   } else {
     // accounting api: http://openexchangerates.github.io/accounting.js/
     formattedPrice = accounting.formatMoney(adjustedPrice, currency);
