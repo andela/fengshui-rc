@@ -4,7 +4,7 @@ import { expect } from "meteor/practicalmeteor:chai";
 import { sinon } from "meteor/practicalmeteor:sinon";
 import { BraintreeApi } from "./braintreeApi";
 
-describe("braintree/refund/create", function () {
+xdescribe("braintree/refund/create", function () {
   let sandbox;
 
   beforeEach(function () {
@@ -15,7 +15,7 @@ describe("braintree/refund/create", function () {
     sandbox.restore();
   });
 
-  it("Should call braintree/refund/create with the proper parameters and return saved = true", function (done) {
+  xit("Should call braintree/refund/create with the proper parameters and return saved = true", function (done) {
     const paymentMethod = {
       processor: "Braintree",
       storedCard: "VISA 4242",

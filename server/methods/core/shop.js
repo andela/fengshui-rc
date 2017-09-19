@@ -62,7 +62,8 @@ Meteor.methods({
    * determine local currency and conversion rate from shop currency
    * @return {Object} returns user location and locale
    */
-  "shop/getLocale": function () {
+  "shop/getLocale": function (country) {
+    check(country, String);
     this.unblock();
     let clientAddress;
     const geo = new GeoCoder();
@@ -86,6 +87,7 @@ Meteor.methods({
       }
     });
 
+
     if (!shop) {
       throw new Meteor.Error(
         "Failed to find shop data. Unable to determine locale.");
@@ -101,10 +103,9 @@ Meteor.methods({
     }
     // geocode reverse ip lookup
     const geoCountryCode = geo.geoip(clientAddress).country_code;
-
     // countryCode either from geo or defaults
-    const countryCode = (geoCountryCode || defaultCountryCode).toUpperCase();
-
+    // const countryCode = (geoCountryCode || defaultCountryCode).toUpperCase();
+    const countryCode = (country).toUpperCase();    
     // get currency rates
     result.currency = {};
     result.locale = shop.locales.countries[countryCode];
@@ -140,7 +141,6 @@ Meteor.methods({
 
     // set server side locale
     Reaction.Locale = result;
-
     // should contain rates, locale, currency
     return result;
   },
