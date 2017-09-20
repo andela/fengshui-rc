@@ -533,8 +533,8 @@ Meteor.methods({
   */
   "send/smsAlert": function (smsContent) {
     check(smsContent, Object);
-    const accountSid = "AC47f25916505c362859637c7e98b07564";
-    const authToken = "f5030c5c18cdd27ab90b72b465252535";
+    const accountSid = process.env.TWILLO_SID;
+    const authToken = process.env.TWILLO_AUTH_TOKEN;
     const client = new twilio(accountSid, authToken);
 
     const numb = smsContent.to;
