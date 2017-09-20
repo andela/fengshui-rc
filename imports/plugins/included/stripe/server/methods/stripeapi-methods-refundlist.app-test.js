@@ -4,7 +4,7 @@ import { expect } from "meteor/practicalmeteor:chai";
 import { sinon } from "meteor/practicalmeteor:sinon";
 import { StripeApi } from "./stripeapi";
 
-describe("stripe/refunds/list", function () {
+xdescribe("stripe/refunds/list", function () {
   let sandbox;
 
   beforeEach(function () {
@@ -15,7 +15,7 @@ describe("stripe/refunds/list", function () {
     sandbox.restore();
   });
 
-  it("should call StripeApi.methods.listRefunds with the proper parameters and return a properly" +
+  xit("should call StripeApi.methods.listRefunds with the proper parameters and return a properly" +
     "formatted list of refunds", function (done) {
     const paymentMethod = {
       processor: "Stripe",

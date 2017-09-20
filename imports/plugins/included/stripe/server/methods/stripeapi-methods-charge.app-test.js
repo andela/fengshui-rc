@@ -44,7 +44,7 @@ const stripeChargeResult = {
 };
 
 
-describe("Stripe.authorize", function () {
+xdescribe("Stripe.authorize", function () {
   let sandbox;
 
   beforeEach(function () {
@@ -55,7 +55,7 @@ describe("Stripe.authorize", function () {
     sandbox.restore();
   });
 
-  it("should call StripeApi.methods.createCharge with the proper parameters and return saved = true", function () {
+  xit("should call StripeApi.methods.createCharge with the proper parameters and return saved = true", function () {
     sandbox.stub(StripeApi.methods.createCharge, "call", function () {
       return stripeChargeResult;
     });
@@ -78,7 +78,7 @@ describe("Stripe.authorize", function () {
   });
 });
 
-describe("Stripe.authorize", function () {
+xdescribe("Stripe.authorize", function () {
   let sandbox;
 
   beforeEach(function () {
@@ -89,7 +89,7 @@ describe("Stripe.authorize", function () {
     sandbox.restore();
   });
 
-  it("should properly charge a card when using a currency besides USD", function () {
+  xit("should properly charge a card when using a currency besides USD", function () {
     const form = {
       cvv2: "345",
       expire_month: "4",
@@ -128,7 +128,7 @@ describe("Stripe.authorize", function () {
   });
 });
 
-describe("Stripe.authorize", function () {
+xdescribe("Stripe.authorize", function () {
   let sandbox;
 
   beforeEach(function () {
@@ -139,7 +139,7 @@ describe("Stripe.authorize", function () {
     sandbox.restore();
   });
 
-  it("should return saved = false when card is declined", function () {
+  xit("should return saved = false when card is declined", function () {
     const form = {
       cvv2: "345",
       expire_month: "4",
@@ -202,7 +202,7 @@ describe("Stripe.authorize", function () {
   });
 });
 
-describe("Stripe.authorize", function () {
+xdescribe("Stripe.authorize", function () {
   let sandbox;
 
   beforeEach(function () {
@@ -213,7 +213,7 @@ describe("Stripe.authorize", function () {
     sandbox.restore();
   });
 
-  it("should return saved = false when an expired card is returned", function () {
+  xit("should return saved = false when an expired card is returned", function () {
     // Note that this test number makes the Stripe API return this error, it is
     // not looking at the actual expiration date.
     const form = {

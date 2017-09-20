@@ -3,7 +3,7 @@ import { EJSON } from "meteor/ejson";
 import { check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { Catalog } from "/lib/api";
-import { Media, Products, Revisions, Tags } from "/lib/collections";
+import { Media, Products, Reviews, Revisions, Tags } from "/lib/collections";
 import { Logger, Reaction } from "/server/api";
 
 /**
@@ -1240,6 +1240,22 @@ Meteor.methods({
     Logger.debug("invalid product visibility ", productId);
     throw new Meteor.Error(400, "Bad Request");
   },
+  "products/reviews": function (productId, review, rate, createdAt, sender) {
+    check(productId, String);
+    check(review, String);
+    check(rate, String);
+    check(createdAt, String);
+    check(sender, String);
+
+    Reviews.insert({
+      productId,
+      review,
+      sender,
+      rate,
+      createdAt
+    });
+  },
+
   /**
    * products/publishProduct
    * @summary publish (visibility) of product

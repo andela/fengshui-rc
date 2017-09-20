@@ -66,7 +66,7 @@ const stripeCaptureResult = {
   status: "succeeded"
 };
 
-describe("stripe/payment/capture", function () {
+xdescribe("stripe/payment/capture", function () {
   let sandbox;
 
   beforeEach(function () {
@@ -77,7 +77,7 @@ describe("stripe/payment/capture", function () {
     sandbox.restore();
   });
 
-  it("should call StripeApi.methods.captureCharge with the proper parameters and return saved = true", function (done) {
+  xit("should call StripeApi.methods.captureCharge with the proper parameters and return saved = true", function (done) {
     const paymentMethod = {
       processor: "Stripe",
       storedCard: "Visa 4242",
@@ -113,7 +113,7 @@ describe("stripe/payment/capture", function () {
   });
 });
 
-describe("stripe/payment/capture", function () {
+xdescribe("stripe/payment/capture", function () {
   let sandbox;
 
   beforeEach(function () {
@@ -124,7 +124,7 @@ describe("stripe/payment/capture", function () {
     sandbox.restore();
   });
 
-  it("should should return a match error if transactionId is not available", function (done) {
+  xit("should should return a match error if transactionId is not available", function (done) {
     const paymentMethod = {
       processor: "Stripe",
       storedCard: "Visa 4242",

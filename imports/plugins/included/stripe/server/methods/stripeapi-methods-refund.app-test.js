@@ -4,7 +4,7 @@ import { expect } from "meteor/practicalmeteor:chai";
 import { sinon } from "meteor/practicalmeteor:sinon";
 import { StripeApi } from "./stripeapi";
 
-describe("stripe/refund/create", function () {
+xdescribe("stripe/refund/create", function () {
   let sandbox;
 
   beforeEach(function () {
@@ -15,7 +15,7 @@ describe("stripe/refund/create", function () {
     sandbox.restore();
   });
 
-  it("should call StripeApi.methods.createRefund with the proper parameters and return saved = true", function (done) {
+  xit("should call StripeApi.methods.createRefund with the proper parameters and return saved = true", function (done) {
     const paymentMethod = {
       processor: "Stripe",
       storedCard: "Visa 4242",
