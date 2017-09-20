@@ -6,6 +6,7 @@ import * as Collections from "/lib/collections";
 import * as Schemas from "/lib/collections/schemas";
 import { GeoCoder, Logger, Reaction } from "/server/api";
 
+
 /**
  * Reaction Shop Methods
  */
@@ -62,8 +63,8 @@ Meteor.methods({
    * determine local currency and conversion rate from shop currency
    * @return {Object} returns user location and locale
    */
-  "shop/getLocale": function (country) {
-    check(country, String);
+  "shop/getLocale": function (country = "US") {
+    check(country, String || null);
     this.unblock();
     let clientAddress;
     const geo = new GeoCoder();
