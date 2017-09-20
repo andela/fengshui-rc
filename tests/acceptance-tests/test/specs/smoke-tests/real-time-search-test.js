@@ -10,7 +10,7 @@ beforeEach(function () {
 });
 
 describe("Real time search", function () {
-  xit("should work when a user types `b` in the search box", function () {
+  it("should work when a user types `b` in the search box", function () {
     const inputText = "b";
     browser.waitForExist(".search", "5000");
     browser.click(".search");
@@ -21,7 +21,7 @@ describe("Real time search", function () {
     expect(browser.getText("#product-title")).to.contain("BASIC REACTION PRODUCT");
   });
 
-  xit("should work when a user types `aer` in the search box", function () {
+  it("should work when a user types `aer` in the search box", function () {
     const inputText = "aer";
     browser.waitForExist(".search", "5000");
     browser.click(".search");

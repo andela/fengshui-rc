@@ -13,6 +13,9 @@ class UserReviews extends React.Component {
     const reviews = Reviews.find({
       productId: this.props.product._id
     }).fetch();
+    if (reviews.length === 0) {
+      return <h3>No Reviews</h3>;
+    }
     return reviews.map((review) => {
       return (
         <Review
