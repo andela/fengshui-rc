@@ -242,8 +242,15 @@ Meteor.methods({
         });
 
         Meteor.call("workflow/pushItemWorkflow", "coreOrderItemWorkflow/captured", order, itemIds);
-
-
+        if (order.email) {
+          Meteor.call("orders/sendNotification", order, (err) => {
+            if (err) {
+              Logger.error(err, "orders/shipmentShipped: Failed to send notification");
+            }
+          });
+        } else {
+          Logger.warn("No order email found. No notification sent.");
+        }
         return this.processPayment(order);
       }
     });
