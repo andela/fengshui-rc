@@ -16,6 +16,8 @@ import {
 } from "./";
 import { AlertContainer } from "/imports/plugins/core/ui/client/containers";
 import { PublishContainer } from "/imports/plugins/core/revisions";
+import Comment from "./Comment";
+import UserReviews from "./UserReviews";
 import firebase from "firebase";
 import config from "../firebase/config";
 firebase.initializeApp(config);
@@ -206,6 +208,9 @@ class ProductDetail extends Component {
               {this.props.mediaGalleryComponent}
               <ProductTags editable={this.props.editable} product={this.product} tags={this.tags} />
               <ProductMetadata editable={this.props.editable} product={this.product} />
+               <h3><b>Product Reviews</b></h3>
+               <UserReviews product={this.props.product}/>
+              { Meteor.user().emails[0] && <Comment product={this.props.product}/>}
             </div>
 
             <div className="pdp column right pdp-right-column">
