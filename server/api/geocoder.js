@@ -1,5 +1,6 @@
 import { Packages } from "/lib/collections";
 import { Logger, Reaction } from "/server/api";
+import { Geolocation } from 'meteor/mdg:geolocation';
 import { HTTP } from "meteor/http";
 import { Meteor } from "meteor/meteor";
 
@@ -116,7 +117,8 @@ function gi(address, callback) {
     lookupAddress = "";
   }
   // calls a private reaction hosted version of freegeoip
-  HTTP.call("GET", `https://geo.getreaction.io/json/${lookupAddress}`, callback);
+  // HTTP.call("GET", `https://geo.getreaction.io/json/${lookupAddress}`, callback);
+  HTTP.call("GET", "https://timezoneapi.io/api/ip", callback);
 }
 
 GeoCoder.prototype.geoip = function geoCoderGeocode(address, callback) {
@@ -129,8 +131,8 @@ GeoCoder.prototype.geoip = function geoCoderGeocode(address, callback) {
     gi(geoAddress, this.options, geoCallback);
   } else {
     try {
-      geoAddress = Meteor.wrapAsync(gi)(geoAddress);
-      return geoAddress.data;
+      geoAddress = Meteor.wrapAsync(gi)(geoAddress);    
+        return geoAddress.data;
     } catch (error) {
       Logger.warn("shop/getLocale geoip lookup failure", error);
       return {};

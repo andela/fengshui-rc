@@ -80,8 +80,8 @@ export default function () {
   Accounts.onCreateUser((options, user) => {
     const shop = Reaction.getCurrentShop();
     const shopId = shop._id;
-    const defaultVisitorRole =  ["anonymous", "guest", "product", "tag", "index", "cart/checkout", "cart/completed"];
-    const defaultRoles =  ["guest", "account/profile", "product", "tag", "index", "cart/checkout", "cart/completed"];
+    const defaultVisitorRole =  ["anonymous", "guest", "product", "tag", "index", "cart/checkout", "cart/completed", "FAQs"];
+    const defaultRoles =  ["guest", "account/profile", "product", "tag", "index", "cart/checkout", "cart/completed", "FAQs"];
     const roles = {};
     const additionals = {
       profile: Object.assign({}, options && options.profile)
@@ -120,13 +120,17 @@ export default function () {
             user.username = user.services[service].name;
             additionals.profile.name = user.services[service].name;
           }
+          if (user.services[service].screenName) {
+            user.username = user.services[service].screenName;
+            additionals.profile.name = user.services[service].screenName;
+          }
           // TODO: For now we have here instagram, twitter and google avatar cases
           // need to make complete list
           if (user.services[service].picture) {
             additionals.profile.picture = user.services[service].picture;
           } else if (user.services[service].profile_image_url_https) {
             additionals.profile.picture = user.services[service].
-              dprofile_image_url_https;
+              profile_image_url_https;
           } else if (user.services[service].profile_picture) {
             additionals.profile.picture = user.services[service].profile_picture;
           }

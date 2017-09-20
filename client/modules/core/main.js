@@ -9,7 +9,7 @@ import { Countries } from "/client/collections";
 import { localeDep } from  "/client/modules/i18n";
 import { Packages, Shops } from "/lib/collections";
 import { Router } from "/client/modules/router";
-
+const CurrencySymbols = require("../CurrencySymbols");
 /**
  * Reaction namespace
  * Global reaction shop permissions methods and shop initialization
@@ -40,7 +40,6 @@ export default {
           }
 
           const locale = this.Locale.get() || {};
-
           // fix for https://github.com/reactioncommerce/reaction/issues/248
           // we need to keep an eye for rates changes
           if (typeof locale.locale === "object" &&
@@ -52,14 +51,25 @@ export default {
                 locale.currency.rate = shop.currencies[localeCurrency].rate;
                 localeDep.changed();
               }
+            } else {
+                HTTP.call('GET', 'https://openexchangerates.org/api/latest.json?app_id=02bc6c7946ed4919bcaa927ebf4fff76', 
+                (error, result) => {
+                  if (!error) {
+                    Session.set('twizzled', true);
+                    const localCurrency = locale.locale.currency;
+                    locale.currency.rate = result.data.rates[localCurrency];
+                    locale.currency.format = "%s%v";
+                    locale.currency.symbol = CurrencySymbols[localCurrency].symbol;
+                    // we are looking for a shopCurrency changes here
+                    if (typeof locale.shopCurrency === "object") {
+                      locale.shopCurrency = shop.currencies[shop.currency];
+                      localeDep.changed();
+                    }
+                    return this;
+                  }
+                });
             }
           }
-          // we are looking for a shopCurrency changes here
-          if (typeof locale.shopCurrency === "object") {
-            locale.shopCurrency = shop.currencies[shop.currency];
-            localeDep.changed();
-          }
-          return this;
         }
       }
     });

@@ -83,5 +83,13 @@ Template.CoreNavigationBar.helpers({
         playTour();
       }
     };
+  },
+
+  FAQsPageButton() {
+    return {
+      component: FlatButton,
+      kind: "flat",
+      label: "FAQs"
+    };
   }
 });
