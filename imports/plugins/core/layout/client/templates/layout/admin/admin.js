@@ -4,6 +4,7 @@ import { Blaze } from "meteor/blaze";
 import { Template } from "meteor/templating";
 import { Reaction, i18next } from "/client/api";
 import { Packages } from "/lib/collections";
+import { Streamy } from "meteor/yuukan:streamy";
 
 
 Template.coreAdminLayout.onRendered(function () {
@@ -64,7 +65,6 @@ Template.coreAdminLayout.helpers({
         instance.dropInstance.open();
       }
     });
-
     return items;
   },
 
@@ -72,6 +72,9 @@ Template.coreAdminLayout.helpers({
     if (props.type === "seperator") {
       return true;
     }
+    Streamy.on('new order', function(d, s) {
+      Alerts.toast("A new Order has being placed", "success");
+    })
     return false;
   },
 
@@ -141,7 +144,8 @@ Template.coreAdminLayout.helpers({
       return settingsData;
     }
     return reactionApp;
-  }
+  },
+  
 });
 
 // Template.coreAdminLayout.events({
