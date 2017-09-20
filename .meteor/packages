@@ -104,3 +104,5 @@ dynamic-import@0.1.1
 abernix:standard-minifier-js
 simple:rest
 nimble:restivus
+themeteorchef:commonmark
+templating-tools@1.1.2
