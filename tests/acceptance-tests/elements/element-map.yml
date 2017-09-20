@@ -96,6 +96,13 @@ send_review: "[class='btn btn-success']"
 # order confirmation page
 thank_you_txt: "h3 > span"
 
+account_dropdown: "#accounts"
+dashboard_dropdown: "#dropdown-apps-dashboard"
+manage_static_page: "(//h3[@class='title'])[5]"
+delete_page: "[class='btn btn-default deletePage']"
+home_page: "[class='brand']"
+confirm_delete: "[class='swal2-confirm swal2-styled']"
+
 # tour
 take_tour: "[class='rui font-icon fa fa-rocket']"
 take_tour_next: "[class='introjs-button introjs-nextbutton']"
