@@ -64,7 +64,7 @@ Meteor.methods({
    * @return {Object} returns user location and locale
    */
   "shop/getLocale": function (country = "US") {
-    check(country, String || null);
+    check(country, String);
     this.unblock();
     let clientAddress;
     const geo = new GeoCoder();
