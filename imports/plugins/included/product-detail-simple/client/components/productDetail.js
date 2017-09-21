@@ -16,8 +16,22 @@ import {
 } from "./";
 import { AlertContainer } from "/imports/plugins/core/ui/client/containers";
 import { PublishContainer } from "/imports/plugins/core/revisions";
+import firebase from "firebase";
+import config from "../firebase/config";
+firebase.initializeApp(config);
 
 class ProductDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedOption: "",
+      downloadUrl: "",
+      isDigital: false,
+      uploadProgress: 0
+    };
+    this.getSelectedOption = this.getSelectedOption.bind(this);
+    this.uploadHandler = this.uploadHandler.bind(this);
+  }
   get tags() {
     return this.props.tags || [];
   }
@@ -28,6 +42,14 @@ class ProductDetail extends Component {
 
   get editable() {
     return this.props.editable;
+  }
+
+  componentDidMount() {
+    if (this.props.product.isDigital) {
+      this.setState({
+        selectedOption: "digital"
+      });
+    }
   }
 
   handleVisibilityChange = (event, isProductVisible) => {
@@ -70,7 +92,75 @@ class ProductDetail extends Component {
         </Toolbar>
       );
     }
+    return null;
+  }
 
+  getSelectedOption(event) {
+    this.setState({
+      selectedOption: event.target.value
+    });
+  }
+
+  selectProductOptions() {
+    if (this.props.hasAdminPermission) {
+      return (
+        <div className="switch-middle">
+          <select className="form-control select-category" name="category" onChange={this.getSelectedOption} value={this.state.selectedOption}>
+            <option className="physical-category" value="physical">Physical Product</option>
+            <option className="digital-category" value="digital">Digital Product</option>
+          </select>
+        </div>
+      );
+    }
+    return null;
+  }
+
+  uploadHandler() {
+    const file = document.getElementById("uploadFile").files[0];
+    if (!file) {
+      Alerts.toast("Select a file to upload", "error");
+      return;
+    }
+    if ((file.size / 1000000) > 100) {
+      Alerts.toast("File size more than 100 MB", "error");
+      return;
+    }
+    const fileName = file.name;
+    const storageRef = firebase.storage().ref("digitalFiles");
+    const spaceRef = storageRef.child(fileName);
+    const uploadTask = spaceRef.put(file);
+    Alerts.toast("Uploading File...", "success");
+    uploadTask.on("state_changed", (snapshot) => {
+      const progressLevel = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      this.setState({ uploadProgress: progressLevel });
+    }, function () {
+      Alerts.toast("Error in uploading file", "error");
+    }, () => {
+      const downloadURL = uploadTask.snapshot.downloadURL;
+      Alerts.toast("File Uploading Completed", "success");
+      this.setState({ downloadUrl: downloadURL, isDigital: true });
+      this.props.onProductFieldChange(this.product._id, "downloadUrl", this.state.downloadUrl);
+      this.props.onProductFieldChange(this.product._id, "isDigital", true);
+      document.getElementById("uploadFile").value = "";
+    });
+  }
+
+  digitalDetails() {
+    if (this.props.hasAdminPermission && this.state.selectedOption === "digital") {
+      return (
+        <div>
+          <input className="btn btn-success" type="file" id="uploadFile"/>
+          <button className="btn btn-success no-round" id="upload-btn" onClick={this.uploadHandler}>Upload Product</button>
+        </div>
+      );
+    }
+    return null;
+  }
+
+  showUploadProgress() {
+    if (this.state.uploadProgress > 0 && this.state.uploadProgress < 100) {
+      return (<button className="btn btn-success upload-progress">{(Math.floor(this.state.uploadProgress)) + "%"}</button>);
+    }
     return null;
   }
 
@@ -162,6 +252,15 @@ class ProductDetail extends Component {
                     placeholder: "Description"
                   }}
                 />
+                {this.selectProductOptions()}
+                <div className="row">
+                  <div className="col-xs-10">
+                    {this.digitalDetails()}
+                  </div>
+                  <div className="col-xs-2">
+                    {this.showUploadProgress()}
+                  </div>
+                </div>
               </div>
 
               <div className="options-add-to-cart">
