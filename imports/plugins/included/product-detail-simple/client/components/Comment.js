@@ -26,7 +26,6 @@ class Comment extends React.Component {
    * validates form inputs
    * @method validateInputs
    * @member Comment
-   * @param {object} event
    * @returns {function} a function that handles change event on inputs
    */
   validateInputs() {
@@ -77,7 +76,7 @@ class Comment extends React.Component {
    * Handle onChange event
    * @method onChange
    * @member Comment
-   * @param {object} event
+   * @param {event} event
    * @returns {function} a function that handles onchange event
    */
   onChange(event) {
