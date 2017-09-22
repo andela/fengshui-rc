@@ -104,3 +104,4 @@ dynamic-import@0.1.1
 abernix:standard-minifier-js
 simple:rest
 nimble:restivus
+pauldowman:dotenv
