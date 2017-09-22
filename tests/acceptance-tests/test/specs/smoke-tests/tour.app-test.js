@@ -23,7 +23,7 @@ describe("Tour", function () {
     browser.pause(2000);
     browser.click(eleMap.take_tour_next);
     browser.pause(2000);
-    browser.click(eleMap.take_tour_next);
+    browser.click(eleMap.take_tour_next)
     browser.pause(2000);
     browser.click(eleMap.take_tour_next);
     browser.pause(2000);
@@ -32,6 +32,7 @@ describe("Tour", function () {
     browser.click(eleMap.take_tour_next);
     browser.pause(2000);
     browser.click(eleMap.take_tour_done);
-    expect(browser.getAttribute("a", "introjs-button introjs-skipbutton introjs-donebutton")).to.exist;
+    expect(browser.isDislayed(".introjs-donebutton")).to.be(true)
+   // expect(browser.getAttribute("a", "introjs-button introjs-skipbutton introjs-donebutton")).to.exist;
   });
 });
