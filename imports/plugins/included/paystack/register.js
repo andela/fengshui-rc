@@ -1,5 +1,11 @@
 import { Reaction } from "/server/api";
 
+/*
+ * @description: registers paystack on the app for
+ * display, and configuration by admin
+ *
+ * @return(void)
+ */
 Reaction.registerPackage({
   label: "PaystackPayment",
   name: "paystack",
@@ -11,7 +17,6 @@ Reaction.registerPackage({
     secretKey: ""
   },
   registry: [
-    // Dashboard card
     {
       provides: "dashboard",
       label: "Paystack Payment",

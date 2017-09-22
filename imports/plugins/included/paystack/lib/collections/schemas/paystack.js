@@ -1,7 +1,12 @@
 import { SimpleSchema } from "meteor/aldeed:simple-schema";
 import { PackageConfig } from "/lib/collections/schemas/registry";
 
-
+/*
+ * @description: creates schema for paystack configuration
+ * with mode, publicKey and secretKey fields
+ *
+ * @return(void) void
+ */
 export const PaystackPackageConfig = new SimpleSchema([
   PackageConfig, {
     "settings.mode": {
@@ -21,6 +26,12 @@ export const PaystackPackageConfig = new SimpleSchema([
   }
 ]);
 
+/*
+ * @description: creates schema for paystack payment details
+ * with payerName, payerEmail fields
+ *
+ * @return(void) void
+ */
 export const PaystackPayment = new SimpleSchema({
   payerName: {
     type: String,

@@ -1,4 +1,3 @@
-/* eslint camelcase: 0 */
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { Random } from "meteor/random";
@@ -9,17 +8,42 @@ import { PaystackPayment } from "../../lib/collections/schemas";
 import "../../lib/api/paystackApi";
 import "./paystack.html";
 
+
+/**
+ * @description: controls the display of inputs, complete-order button
+ * and processing-button
+ *
+ * @param {template} the template to control
+ * @param {buttonText} the text to display on complete-order button
+ *
+ * @return {void}
+ */
 const enableButton = (template, buttonText) => {
   template.$(":input").removeAttr("disabled");
   template.$("#btn-complete-order").text(buttonText);
   return template.$("#btn-processing").addClass("hidden");
 };
 
+/**
+ * @description: controls the display of alert element on payment form
+ *
+ * @param {template} the template to control
+ * @param {errorMessage} the error message to display
+ *
+ * @return {void}
+ */
 function paymentAlert(template, errorMessage) {
   $("#paystackPaymentForm").find(".alert").removeClass("hidden").text(
     errorMessage || "An error occurred. Kindldy check the details you entered");
 }
 
+/**
+ * @description: controls the submit event on payment form
+ *
+ * @param {error} the error object from server
+ *
+ * @return {Function} paymentAlert function displaying the error message
+ */
 function handlePaystackSubmitError(error) {
   const serverError = error !== null ? error.message : void 0;
   if (serverError) {
@@ -30,11 +54,24 @@ function handlePaystackSubmitError(error) {
 }
 
 Template.paystackPaymentForm.helpers({
+/**
+ * @description: returns paystack payment schema
+ *
+ * @return {object} the paystack payment schema
+ */
   PaystackPayment() {
     return PaystackPayment;
   }
 });
 
+/**
+ * @description: generates paystackPaymentForm
+ *
+ * @param {string} id of the form to generate
+ * @param {object} object containing attributes of the form
+ *
+ * @return {void}
+ */
 AutoForm.addHooks("paystack-payment-form", {
   onSubmit(doc) {
     Meteor.call("paystack/getKeys", (err, keys) => {
