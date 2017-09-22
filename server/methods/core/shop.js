@@ -105,7 +105,7 @@ Meteor.methods({
     const geoCountryCode = geo.geoip(clientAddress).country_code;
     // countryCode either from geo or defaults
     // const countryCode = (geoCountryCode || defaultCountryCode).toUpperCase();
-    const countryCode = (country).toUpperCase();    
+    const countryCode = (country).toUpperCase();
     // get currency rates
     result.currency = {};
     result.locale = shop.locales.countries[countryCode];
