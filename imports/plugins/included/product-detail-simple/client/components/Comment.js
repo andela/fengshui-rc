@@ -3,6 +3,10 @@ import ReactStars from "react-stars";
 import moment from "moment";
 import { Meteor } from "meteor/meteor";
 
+/**
+ * @class Comment
+ * @extends React.Component
+ */
 class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +22,12 @@ class Comment extends React.Component {
     this.validateInputs = this.validateInputs.bind(this);
     this.onFocus = this.onFocus.bind(this);
   }
+  /**
+   * validates form inputs
+   * @method validateInputs
+   * @member Comment
+   * @returns {function} a function that handles change event on inputs
+   */
   validateInputs() {
     containChr = true;
     if (this.state.rate === 0) {
@@ -41,6 +51,14 @@ class Comment extends React.Component {
       }
     }
   }
+
+  /**
+   * Get the current user
+   * @method getCurrentUser
+   * @member Comment
+   * @param {object} userEmail
+   * @returns {function} a function that returns the current user
+   */
   getCurrentUser(userEmail) {
     let currentUser = "";
     let hasSeen = false;
@@ -54,17 +72,37 @@ class Comment extends React.Component {
     });
     return currentUser;
   }
+  /**
+   * Handle onChange event
+   * @method onChange
+   * @member Comment
+   * @param {event} event
+   * @returns {function} a function that handles onchange event
+   */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
+  /**
+   * Handle rating Change event
+   * @method ratingChanged
+   * @member Comment
+   * @param {object} newRating
+   * @returns {function} a function that set the state of rating
+   */
   ratingChanged = (newRating) => {
     this.setState({
       rate: newRating,
       error: ""
     });
   }
+  /**
+   * Handle onFocus event
+   * @method onFocus
+   * @member Comment
+   * @returns {function} a function that handle onfocus event
+   */
   onFocus() {
     if (this.state.error !== "") {
       this.setState({
@@ -72,6 +110,12 @@ class Comment extends React.Component {
       });
     }
   }
+  /**
+   * Handle onClick event
+   * @method onClick
+   * @member Comment
+   * @returns {function} a function that handle On button click event
+   */
   onClick() {
     this.validateInputs();
     setTimeout(() => {
@@ -95,6 +139,12 @@ class Comment extends React.Component {
       }
     }, 500);
   }
+  /**
+   * render component
+   * @method render
+   * @member Comment
+   * @returns {object} component
+   */
   render() {
     return (
     <div>

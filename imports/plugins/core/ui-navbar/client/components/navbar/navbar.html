@@ -6,12 +6,13 @@
     <div class="menu">
       {{> tagNav tagNavProps}}
     </div>
-    
+
     <div id="faqs"> <a class="faqs-button" href="/reaction/FAQs">{{> React FAQsPageButton}} </a> </div>
+    <div  class="accounts" id="pages">{{> accounts tpl="staticPagesNav"}}</div>
     <div class="search">{{> React IconButtonComponent}}</div>
     <div class="tour">{{> React ComponentTourButton}}</div>
     <div class="languages hidden-xs">{{> i18nChooser}}</div>
-    <div class="accounts">{{> accounts tpl="loginDropdown"}}</div>
+    <div class="accounts" id="accounts">{{> accounts tpl="loginDropdown"}}</div>
     <div class="cart">{{> cartIcon}}</div>
     <div class="cart-alert">{{> cartPanel}}</div>
   </div>
