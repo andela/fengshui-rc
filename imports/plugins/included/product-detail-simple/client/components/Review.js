@@ -1,6 +1,10 @@
 import React from "react";
 import ReactStars from "react-stars";
 
+/**
+ * @class Review
+ * @extends React.Component
+ */
 class Review extends React.Component {
   render() {
     return (

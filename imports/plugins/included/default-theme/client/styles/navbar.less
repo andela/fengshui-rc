@@ -1,4 +1,3 @@
-
 .rui.navbar {
   .display(flex);
   .align-items(center);
@@ -11,10 +10,34 @@
 .rui.navbar a,
 .rui.navbar a:hover,
 .rui.navbar a:focus,
-.rui.navbar .dropdown-toggle {
+.rui.navbar a:hover {
   color: @navbar-default-link-color;
   cursor: pointer;
   text-decoration: none;
+}
+.tourcontainer {
+  line-height: 20px;
+  font-family: inherit;
+}
+.introjs-tooltip {
+  box-sizing: content-box;
+  position: absolute;
+  visibility: visible;
+  padding: 10px;
+  background-color: white;
+  min-width: 300px !important;
+  max-width: 300px !important;
+  border-radius: 3px;
+  box-shadow: 0 1px 10px rgba(0,0,0,.4);
+  -webkit-transition: opacity 0.1s ease-out;
+     -moz-transition: opacity 0.1s ease-out;
+      -ms-transition: opacity 0.1s ease-out;
+       -o-transition: opacity 0.1s ease-out;
+          transition: opacity 0.1s ease-out;
+}
+
+.rui.navbar .button {
+   display: inline-block;
 }
 
 .rui.navbar .showmenu {
@@ -108,13 +131,25 @@
   .flex(0 0 auto);
   height: @navbar-height;
 }
+.rui.navbar .pages {
+  .flex(0 0 auto);
+  height: @navbar-height;
+}
 
 .rui.navbar .accounts:hover {
   background-color: @navbar-default-toggle-icon-bar-bg;
   border-color: @navbar-default-toggle-border-color;
 }
+.rui.navbar .pages:hover {
+  background-color: @navbar-default-toggle-icon-bar-bg;
+  border-color: @navbar-default-toggle-border-color;
+}
 
 .rui.navbar .accounts:active {
+  background-color: @navbar-default-toggle-icon-bar-bg;
+  border-color: @navbar-default-toggle-border-color;
+}
+.rui.navbar .pages:active {
   background-color: @navbar-default-toggle-icon-bar-bg;
   border-color: @navbar-default-toggle-border-color;
 }
@@ -127,16 +162,34 @@
   padding: 0 @navbar-padding-vertical;
   .padding-left(@navbar-padding-vertical);
 }
+.rui.navbar .pages .dropdown-toggle {
+  .display(flex);
+  .align-items(center);
+  height: 100%;
+
+  padding: 0 @navbar-padding-vertical;
+  .padding-left(@navbar-padding-vertical);
+}
 
 .rui.navbar .accounts .dropdown {
+  height: 100%;
+}
+.rui.navbar .pages .dropdown {
   height: 100%;
 }
 
 .rui.navbar .accounts .additional-link-container a {
   color: @link-color;
 }
+.rui.navbar .pages .additional-link-container a {
+  color: @link-color;
+}
 
 .rui.navbar .accounts .additional-link-container a:hover {
+  color: @link-hover-color;
+  background-color: transparent;
+}
+.rui.navbar .pages .additional-link-container a:hover {
   color: @link-hover-color;
   background-color: transparent;
 }
@@ -150,12 +203,27 @@
   // padding: 10px;
   display: inline-block;
 }
+.rui.navbar .pages .dropdown .circular-icon {
+  width: 40px;
+  height: 40px;
+  margin: -15px 5px;
+  border: 2px solid rgba(129, 122, 122, 0.62);
+  border-radius: 50%;
+  // padding: 10px;
+  display: inline-block;
+}
 
 .rui.navbar .accounts .dropdown .circular-icon .avatar-initials {
   line-height: 35px;
 }
+.rui.navbar .pages .dropdown .circular-icon .avatar-initials {
+  line-height: 35px;
+}
 
 .rui.navbar .accounts .dropdown .user-accounts-dropdown {
+  padding: 10px;
+}
+.rui.navbar .pages .dropdown .user-accounts-dropdown {
   padding: 10px;
 }
 
@@ -165,8 +233,17 @@
   // margin-bottom: 30px;
   color: @gray-darker;
 }
+.rui.navbar .pages .dropdown .user-accounts-dropdown-content {
+  min-width: 220px;
+  min-height: 50px;
+  // margin-bottom: 30px;
+  color: @gray-darker;
+}
 
 .rui.navbar .accounts .dropdown ul {
+    padding: 0;
+}
+.rui.navbar .pages .dropdown ul {
     padding: 0;
 }
 
@@ -201,8 +278,8 @@
   min-height: 44px;
 }
 
-.rui.navbar .accounts .dropdown .dropdown-apps-icon a:hover,
-.rui.navbar .accounts .dropdown .dropdown-apps-icon a:focus {
+.rui.navbar .accounts .dropdown .dropdown-apps-icon a:focus,
+.rui.navbar .accounts .dropdown .dropdown-apps-icon a:hover {
   color: @brand-vivid-color;
   text-decoration: none;
   background-color: transparent;
@@ -215,7 +292,7 @@
   .left(auto);
 }
 
-.rui.navbar .search {
+.rui.navbar .search, .tour {
   .display(flex);
   .align-items(center);
   .flex(0 0 auto);
@@ -224,7 +301,7 @@
   cursor: pointer;
 }
 
-.rui.navbar .search:hover {
+.rui.navbar .search:hover, .tour:hover {
   background-color: @navbar-default-toggle-icon-bar-bg;
   border-color: @navbar-default-toggle-border-color;
 }
@@ -233,24 +310,54 @@
   outline: none;
 }
 
-.rui.navbar .tour {
-  width: 70px;
-  margin-left: 40px;
-  padding-top: 16px;
-  height: 55px;
+#wallet-accordian{
+margin-top: -20px;
 }
-
-.rui.navbar .tour:hover {
-  color: @brand-vivid-color;
-  text-decoration: none;
-  background-color: transparent;
+.wallet-btn {
+ background-color: #ed7d1a !important;
+border: none;
+}
+.rui.navbar .tour {
+  .display(flex);
+  .align-items(center);
+  .flex(0 0 auto);
+  height: @navbar-height;
+  padding: 0 @navbar-padding-vertical;
   cursor: pointer;
 }
 
-.tourtitle {
-  color: #25b315 !important
+.rui.navbar .tour:hover {
+  background-color: @navbar-default-toggle-icon-bar-bg;
+  border-color: @navbar-default-toggle-border-color;
 }
 
-.introjs-showElement {
-  background-color: #25b315;
+.rui.navbar .tour:hover button {
+  outline: none;
+}
+
+.rui.navbar .tour .flat {
+  width: auto;
+}
+
+.rui.navbar .page {
+  .display(flex);
+  .align-items(center);
+  .flex(0 0 auto);
+  height: @navbar-height;
+  padding: 0 @navbar-padding-vertical;
+  cursor: pointer;
+}
+
+.rui.navbar .page:hover {
+  background-color: @navbar-default-toggle-icon-bar-bg;
+  border-color: @navbar-default-toggle-border-color;
+}
+
+.rui.navbar .page:hover button {
+  outline: none;
+}
+
+.rui.navbar .page .flat {
+  width: auto;
+ margin-top: 8px;
 }
