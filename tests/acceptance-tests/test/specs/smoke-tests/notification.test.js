@@ -15,68 +15,41 @@ beforeEach(function () {
 describe("Ordering product test", function () {
   it("should display success message to the user after successful order", function () {
     const eleMap = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-map.yml", "utf8"));
-    const eleIds = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-ids.yml", "utf8"));
-
-    // default to process env if we've got that
-    const adminEmail = "emmanuel.alabi@andela.com";
-    const adminPassword = "qwerty123@";
-    const adminUserName = process.env.REACTION_USER;
-
-    browser.pause("5000");
-    browser.click(eleMap.login_dropdown_btn);
-    browser.pause(5000);
-    browser.setValue(getId.retId(eleIds.login_email_fld_id), adminEmail);
-    browser.setValue(getId.retId(eleIds.login_pw_fld_id), adminPassword);
-    browser.click(eleMap.login_btn);
-    browser.waitForExist(".product-grid-item-images", "5000");
-    browser.click(".product-grid-item-images");
-    browser.waitForExist(".title", "5000");
-    browser.click(".title");
-    browser.click(".js-add-to-cart");
-    browser.waitForExist(".cart-icon", "5000");
-    browser.click(".cart-icon");
-    browser.waitForExist("#btn-checkout", "5000");
-    browser.click("#btn-checkout");
-    browser.waitForExist(".product-grid-item-images", "5000");
-    browser.click("select[name='country']");
-    browser.click("option[value='NG']");
-    browser.setValue("input[name='fullName']", "Example");
-    browser.setValue("input[name='address1']", "Example");
-    browser.setValue("input[name='postal']", "121211");
-    browser.setValue("input[name='city']", "example");
-    browser.setValue("input[name='region']", "example");
-    browser.setValue("input[name='phone']", "0000000000");
-    browser.click("button");
-
-    browser.waitForExist("#btn-checkout", "5000");
-    browser.click("//span[text()='Free Shipping']");
-
-    browser.waitForExist("//span[text()='Example Payment']", "5000");
-    browser.click("//span[text()='Example Payment']");
-
-    browser.waitForExist("input[name='cardNumber']", "5000");
-    browser.setValue("input[name='cardNumber']", process.env.visa);
-
-    browser.waitForExist("#select[name='expireMonth']", "5000");
-    browser.click("select[name='expireMonth']");
-
-    browser.waitForExist("option[value='1']", "5000");
-    browser.click("option[value='1']");
-
-    browser.waitForExist("select[name='expireYear']", "5000");
-    browser.click("select[name='expireYear']");
-
-    browser.waitForExist("option[value='2020']", "5000");
-    browser.click("option[value='2020']");
-
-    browser.waitForExist("input[name='cvv']", "5000");
-    browser.setValue("input[name='cvv']", process.env.cvv);
-
-    browser.waitForExist("#btn-complete-order", "5000");
-    browser.click("#btn-complete-order");
-    expect(span.getText()).toEqual("Thank you");
-    expect(span.getText()).toEqual("Order updates will be sent to");
-    expect(span.getText()).toEqual("emmanuel.alabi@andela.com");
-    expect(span.getText()).toEqual("Your order is now");    
-});
-});
+        const eleIds = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-ids.yml", "utf8"));
+    
+        const guestEmail = process.env.GUEST_EMAIL;
+        const guestPw = process.env.GUEST_PASSWORD;
+    
+        browser.waitForExist(".product-grid");
+        browser.click(eleMap.login_dropdown_btn);
+        browser.waitForExist(eleMap.login_btn);
+        browser.setValue(getId.retId(eleIds.login_email_fld_id), guestEmail);
+        browser.setValue(getId.retId(eleIds.login_pw_fld_id), guestPw);
+        browser.click(eleMap.login_btn);
+        browser.waitForExist("#logged-in-display-name");
+        browser.click("//div[text()='Basic Reaction Product']");
+        browser.waitForExist("//span[text()='Red']");
+        browser.click("//span[text()='Red']");
+        browser.waitForExist(".js-add-to-cart");
+        browser.click(".js-add-to-cart");
+        browser.waitForExist("#btn-checkout");
+        browser.click("#btn-checkout");
+        browser.waitForExist("//span[text()='Free Shipping']");
+        browser.click("//span[text()='Free Shipping']");
+        browser.waitForExist("#payment-methods-accordian");
+        browser.click("#payment-methods-accordian");
+        browser.setValue("input[name='cardNumber']", process.env.VISA);
+        browser.waitForExist("select[name='expireMonth']");
+        browser.click("select[name='expireMonth']");
+        browser.click("option[value='2']");
+        browser.click("select[name='expireYear']");
+        browser.click("option[value='2019']");
+        browser.setValue("input[name='cvv']", "123");
+        browser.click("//span[text()='Complete your order']");
+        browser.waitForExist(".order-detail-title");
+        expect(browser.getAttribute("div", "order-item")).to.exist;
+        expect(browser.getText(".order-detail-title")).to.equal("Basic Reaction Product Option 1 - Red Dwarf");
+        expect(browser.getText("#customers-email")).to.equal(process.env.GUEST_EMAIL);
+        expect(browser.getAttribute("div", "order-item")).to.exist;
+      });
+    });  

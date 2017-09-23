@@ -34,7 +34,7 @@ Meteor.methods({
                       <tr><td> Quanty </td><td> ${payload.dataForOrderEmail.order.items[0].quantity} </td></tr>
                       <tr><td> Price </td><td> ${payload.dataForOrderEmail.billing.total} </td></tr>
                       <tr><td> Image </td><td> ${payload.dataForOrderEmail.order.items[0].placeholderImage} </td></tr>
-                      <tr><td> Order Data </td><td> ${payload.dataForOrderEmail.orderDate} </td></tr>
+                      <tr><td> Order Date </td><td> ${payload.dataForOrderEmail.orderDate} </td></tr>
                       <tr><td colspan='2'>
                         <a href='${payload.dataForOrderEmail.homepage}'>
                           Ⓒ ${payload.dataForOrderEmail.copyrightDate} Reaction
