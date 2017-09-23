@@ -3,6 +3,7 @@ import path from "path";
 import moment from "moment";
 import accounting from "accounting-js";
 import Future from "fibers/future";
+import twilio from "twilio";
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
 import { Streamy } from "meteor/yuukan:streamy";
@@ -14,7 +15,7 @@ import jusibe from "jusibe";
 import nodemailer from "nodemailer";
 
 
-/**
+/*
  * Reaction Order Methods
  */
 Meteor.methods({
@@ -211,6 +212,54 @@ Meteor.methods({
         "billing.0.paymentMethod.mode": "capture",
         "billing.0.invoice.discounts": discount,
         "billing.0.invoice.total": accounting.toFixed(total, 2)
+      }
+    });
+  },
+
+  /**
+   * orders/cancelOrder
+   *
+   * @summary Cancel an Order
+   * @param {Object} order - order object
+   * @return {Object} return update result
+   */
+  "orders/cancelOrder"(order) {
+    check(order, Object);
+    return Orders.update(order._id, {
+      $set: {
+        "workflow.status": "canceled"
+      },
+      $addToSet: {
+        "workflow.workflow": "coreOrderWorkflow/canceled"
+      }
+    });
+  },
+
+  /**
+   * orders/vendorCancelOrder
+   *
+   * @summary Cancel an Order
+   * @param {Object} order - order object
+   * @param {Object} newComment - new comment object
+   * @return {Object} return update result
+   */
+  "orders/vendorCancelOrder"(order, newComment) {
+    check(order, Object);
+    check(newComment, Object);
+
+    if (!Reaction.hasPermission("orders")) {
+      throw new Meteor.Error(403, "Access Denied");
+    }
+    // TODO: Refund order
+    return Orders.update(order._id, {
+      $set: {
+        "workflow.status": "canceled"
+      },
+      $push: {
+        comments: newComment
+      },
+      $addToSet: {
+        "workflow.workflow": "coreOrderWorkflow/canceled"
       }
     });
   },
@@ -475,13 +524,12 @@ Meteor.methods({
     SSR.compileTemplate(tpl, Reaction.Email.getTemplate(tpl))
 
     Reaction.Email.send({
-      to: "emmanuel.alabi@andela.com",
+      to: "teamfengshui28@gmail.com",
       from: `${shop.name} <${shop.emails[0].address}>`,
       subject: "Your order is confirmed",
       // subject: `Order update from ${shop.name}`,
       html: SSR.render(tpl, dataForOrderEmail)
     });
-    // Meteor.call('orders/sendMail', order);
     const message = {
           "new": "Howdy, your order has been created. Thanks.",
           "coreOrderWorkflow/processing": "Howdy, your payment as being aproved. and you good has being shipped. Thanks",
@@ -507,6 +555,56 @@ Meteor.methods({
     }
     return true;
   },
+
+  /**
+  * send/smsAlert
+  *
+  * @summary trigger sms from twilio
+  * @param {Object} smsContent - body of message object
+  * @return {Object} return success or error on completion
+  */
+  "send/smsAlert": function (smsContent) {
+    check(smsContent, Object);
+    const accountSid = process.env.TWILLO_SID;
+    const authToken = process.env.TWILLO_AUTH_TOKEN;
+    const client = new twilio(accountSid, authToken);
+
+    const numb = smsContent.to;
+    let validNo;
+    if (numb.substr(0, 2) === "07" || "08") {
+      validNo = numb.replace(numb.substr(0, 1), "+234");
+    }
+    Logger.info(validNo);
+    const body =  smsContent.message;
+    client.messages.create({
+      body,
+      to: validNo || smsContent.to,  // Text this number
+      from: "+16283000182" // From a valid Twilio number
+    })
+    .then((message) => {
+      Logger.info(message);
+    }).catch((error) => {
+      Logger.info(error);
+    });
+  },
+
+  /**
+  * orders/response/error
+  * Logs message based on the error info received
+  * @param {Object} error - error message
+  * @param {String} success - success message
+  * @return {null} no return value
+  */
+  "orders/response/error": (error, success) => {
+    check(error);
+    check(success, String);
+    if (error) {
+      Logger.warn("ERROR", error);
+    } else {
+      Logger.info(success);
+    }
+  },
+
 
   /**
    * orders/orderCompleted
