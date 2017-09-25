@@ -1,7 +1,7 @@
 import { Reaction } from "/server/api";
 
 Reaction.registerPackage({
-  label: "Analytics",
+  label: "Actionable Analytics",
   name: "reaction-actionable-analytics",
   icon: "fa fa-bar-chart",
   autoEnable: true,
@@ -13,7 +13,7 @@ Reaction.registerPackage({
       route: "/dashboard/actionable-analytics",
       provides: "dashboard",
       name: "actionableAnalytics",
-      label: "Analytics",
+      label: "Actionable Analytics",
       description: "Click to see your store's analytics",
       icon: "fa fa-bar-chart",
       priority: 1,
