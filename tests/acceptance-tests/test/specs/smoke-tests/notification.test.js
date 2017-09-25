@@ -13,7 +13,7 @@ beforeEach(function () {
 });
 
 describe("Ordering product test", function () {
-  it("should display success message to the user after successful order", function () {
+  xit("should display success message to the user after successful order", function () {
     const eleMap = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-map.yml", "utf8"));
         const eleIds = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-ids.yml", "utf8"));
     

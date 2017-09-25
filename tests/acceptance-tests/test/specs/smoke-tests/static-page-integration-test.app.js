@@ -22,13 +22,12 @@ describe("Manage static pages", function () {
     browser.setValue(getId.retId(eleIds.login_email_fld_id), adminEmail);
     browser.setValue(getId.retId(eleIds.login_pw_fld_id), adminPassword);
     browser.click(eleMap.login_btn);
-    browser.waitForExist(eleMap.account_dropdown, "5000");
-
-    browser.click(eleMap.account_dropdown);
+    browser.waitForExist(".circular-icon", "5000");
+    browser.click(".circular-icon");
     browser.waitForExist(eleMap.dashboard_dropdown, "6000");
     browser.click(eleMap.dashboard_dropdown);
     browser.waitForExist(eleMap.manage_static_page, "5000");
-    browser.click(eleMap.manage_static_page);
+    browser.click(".fa-paperclip");
     browser.waitForExist("#static-page-title", "5000");
     browser.setValue("#static-page-title", "About-Page");
     browser.setValue("#static-page-slug", "About-Page");
