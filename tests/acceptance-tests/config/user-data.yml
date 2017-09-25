@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 admin_user: Admin
 admin_email: tb36ap3t@localhost
@@ -24,3 +25,7 @@ stripe_visa: 4000000000000077
 exp_month: 1
 exp_year: 2020
 cvv: 123
+=======
+admin_email: 9mjirq2d@localhost
+admin_pw: xCkfST5p
+>>>>>>> feat(end-to-end test): implement end to end test

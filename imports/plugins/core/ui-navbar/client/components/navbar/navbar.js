@@ -73,6 +73,18 @@ Template.CoreNavigationBar.helpers({
       }
     };
   },
+
+ /**
+ *  @description creates static page menu button
+ * @return {object} button component
+ */
+  staticPagesMenu() {
+    return {
+      component: FlatButton,
+      kind: "flat",
+      label: "Pages"
+    };
+  },
   ComponentTourButton() {
     return {
       component: FlatButton,
