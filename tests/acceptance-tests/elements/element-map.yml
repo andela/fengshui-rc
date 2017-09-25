@@ -129,3 +129,22 @@ confirm_cancel_order: "(//button[@class='swal2-confirm swal2-styled'])"
 show_cancelled_orders: "(//a[@aria-controls='canceled'])"
 close_dashboard: "[data-event-action='closeSettings']"
 availbale_pages: "#logged-in-display-name"
+delete_page: "[class='btn btn-default deletePage']"
+home_page: "[class='brand']"
+confirm_delete: "[class='swal2-confirm swal2-styled']"
+
+# tour
+take_tour: "[class='rui font-icon fa fa-rocket']"
+take_tour_next: "[class='introjs-button introjs-nextbutton']"
+take_tour_done: "[class='introjs-button introjs-skipbutton introjs-donebutton']"
+
+# digital product upload
+open_create_product: "[class='rui font-icon fa fa-plus']"
+create_product: "[class='rui button btn btn-default undefined']"
+title_input: "[class='text-edit-input pdp product-detail-edit title-edit-input']"
+subtitle_input: "[class='text-edit-input pdp product-detail-edit pageTitle-edit-input']"
+vendor_input: "[class='text-edit-input pdp product-detail-edit vendor-edit-input']"
+description_input: "[class='{this.props.name}-edit-input']"
+select_category: "[class='select-category']"
+digital_category: "[class='digital-category']"
+add_to_cartt: "[class='input-group-addon add-to-cart-text js-add-to-cart']"
