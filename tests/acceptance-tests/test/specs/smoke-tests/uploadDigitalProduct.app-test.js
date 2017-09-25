@@ -15,7 +15,7 @@ beforeEach(function () {
 });
 
 describe("Digital product", function () {
-  it("should be uploaded when admin decides to create a downloadable product", function () {
+  xit("should be uploaded when admin decides to create a downloadable product", function () {
     const eleMap = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-map.yml", "utf8"));
     const eleIds = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-ids.yml", "utf8"));
 

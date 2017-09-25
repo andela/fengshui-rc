@@ -1,2 +1,25 @@
-admin_email: 9mjirq2d@localhost
-admin_pw: xCkfST5p
+admin_user: Admin
+admin_email: tb36ap3t@localhost
+admin_pw: Nn9gE0f6
+guest_pw: poly12345
+guest_email: chinonso.johnson@andela.com
+guest_user: Guest
+wallet_history: Transaction History
+
+# shop address
+country: US
+name: Lewis Hamilton
+address1: 2110 Main Street.
+postal: 90405
+city: Santa Monica
+region: CA
+phone: 555-555-5555
+
+# payment info
+card_holder: Nico Roseberg
+visa: 4242424242424242
+paypal_visa: 4111111111111111
+stripe_visa: 4000000000000077
+exp_month: 1
+exp_year: 2020
+cvv: 123

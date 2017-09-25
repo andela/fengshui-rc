@@ -13,7 +13,7 @@ beforeEach(function () {
 });
 
 describe("Tour", function () {
-  it("should take a user through the app when the tour button is clicked", function () {
+  xit("should take a user through the app when the tour button is clicked", function () {
     const eleMap = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-map.yml", "utf8"));
     browser.waitForExist(".navbar");
     browser.waitForExist(".product-grid");

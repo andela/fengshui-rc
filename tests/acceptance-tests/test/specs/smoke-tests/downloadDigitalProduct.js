@@ -15,7 +15,7 @@ beforeEach(function () {
 });
 
 describe("Digital product", function () {
-  it("should be downloaded once an authorized buyer click on 'Download Product'", function () {
+  xit("should be downloaded once an authorized buyer click on 'Download Product'", function () {
     const eleMap = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-map.yml", "utf8"));
     const eleIds = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-ids.yml", "utf8"));
 
