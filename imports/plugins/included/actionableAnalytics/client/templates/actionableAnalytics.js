@@ -93,104 +93,147 @@ function setUpAverageSales(totalSales, fromDate, toDate) {
   return salesPerDay;
 }
 
-Template.actionableAnalytics.onCreated(function () {
-  this.state = new ReactiveDict();
-  this.state.setDefault({
-    ordersPlaced: 0,
-    beforeDate: new Date(),
-    afterDate: new Date(),
-    totalSales: 0,
-    totalItemsPurchased: 0,
-    ordersCancelled: 0,
-    totalShippingCost: 0,
-    salesPerDay: 0,
-    analytics: {},
-    analyticsStatement: {},
-    ordersAnalytics: [],
-    productsAnalytics: []
-  });
-  const self = this;
-  self.autorun(() => {
-    const orderSub = self.subscribe("Orders");
-    if (orderSub.ready()) {
-      const allOrders = Orders.find({
-        createdAt: {
-          $gte: new Date(self.state.get("beforeDate").setHours(0)),
-          $lte: new Date(self.state.get("afterDate").setHours(23))
+Template.actionableAnalytics.onCreated(
+
+  /**
+   * Initializes the analytics state
+   * Sets the default values needed for the analytics
+   * @returns {void}
+   */
+  function () {
+    this.state = new ReactiveDict();
+    this.state.setDefault({
+      ordersPlaced: 0,
+      beforeDate: new Date(),
+      afterDate: new Date(),
+      totalSales: 0,
+      totalItemsPurchased: 0,
+      ordersCancelled: 0,
+      totalShippingCost: 0,
+      salesPerDay: 0,
+      analytics: {},
+      analyticsStatement: {},
+      ordersAnalytics: [],
+      productsAnalytics: []
+    });
+
+    const self = this;
+
+    self.autorun(() => {
+      const orderSub = self.subscribe("Orders");
+      if (orderSub.ready()) {
+        const allOrders = Orders.find({
+          createdAt: {
+            $gte: new Date(self.state.get("beforeDate").setHours(0)),
+            $lte: new Date(self.state.get("afterDate").setHours(23))
+          }
+        }).fetch();
+
+        if (allOrders) {
+          const analyticsItems = extractAnalyticsItems(allOrders);
+          self.state.set("ordersPlaced", allOrders.length);
+          self.state.set("totalSales", analyticsItems.totalSales);
+          self.state.set("totalItemsPurchased", analyticsItems.totalItemsPurchased);
+          self.state.set("totalShippingCost", analyticsItems.totalShippingCost);
+          self.state.set("analytics", analyticsItems.analytics);
+          self.state.set("analyticsStatement", analyticsItems.analyticsStatement);
+          self.state.set("ordersAnalytics", analyticsItems.ordersAnalytics);
+          self.state.set("ordersCancelled", analyticsItems.ordersCancelled);
+          self.state.set("salesPerDay",
+            setUpAverageSales(self.state.get("totalSales"),
+              self.state.get("beforeDate"),
+              self.state.get("afterDate")));
         }
-      }).fetch();
-      if (allOrders) {
-        const analyticsItems = extractAnalyticsItems(allOrders);
-        self.state.set("ordersPlaced", allOrders.length);
-        self.state.set("totalSales", analyticsItems.totalSales);
-        self.state.set("totalItemsPurchased", analyticsItems.totalItemsPurchased);
-        self.state.set("totalShippingCost", analyticsItems.totalShippingCost);
-        self.state.set("analytics", analyticsItems.analytics);
-        self.state.set("analyticsStatement", analyticsItems.analyticsStatement);
-        self.state.set("ordersAnalytics", analyticsItems.ordersAnalytics);
-        self.state.set("ordersCancelled", analyticsItems.ordersCancelled);
-        self.state.set("salesPerDay",
-          setUpAverageSales(self.state.get("totalSales"),
-            self.state.get("beforeDate"),
-            self.state.get("afterDate")));
       }
-    }
-  });
-});
-
-Template.actionableAnalytics.onRendered(() => {
-  const instance = Template.instance();
-  let fromDatePicker = {};
-  const toDatePicker = new Pikaday({ // eslint-disable-line no-undef
-    field: $("#todatepicker")[0],
-    format: "DD/MM/YYYY",
-    onSelect() {
-      const nextDate = this.getDate();
-      instance.state.set("afterDate", nextDate);
-    }
+    });
   });
 
-  fromDatePicker = new Pikaday({ // eslint-disable-line no-undef
-    field: $("#fromdatepicker")[0],
-    format: "DD/MM/YYYY",
-    onSelect() {
-      toDatePicker.setMinDate(this.getDate());
-      const nextDate = this.getDate();
-      if (Date.parse(toDatePicker.getDate()) < Date.parse(nextDate)) {
-        toDatePicker.setDate(nextDate);
-      } else {
-        instance.state.set("beforeDate", this.getDate());
+Template.actionableAnalytics.onRendered(
+
+  /**
+   * Creates a new template instance
+   * Sets and formats Pikaday dates
+   * @returns {void}
+   */
+  () => {
+    const instance = Template.instance();
+    let fromDatePicker = {};
+    const toDatePicker = new Pikaday({
+      field: $("#todatepicker")[0],
+      format: "DD/MM/YYYY",
+      onSelect() {
+        const nextDate = this.getDate();
+        instance.state.set("afterDate", nextDate);
       }
-    }
+    });
+
+    fromDatePicker = new Pikaday({
+      field: $("#fromdatepicker")[0],
+      format: "DD/MM/YYYY",
+      onSelect() {
+        toDatePicker.setMinDate(this.getDate());
+        const nextDate = this.getDate();
+        if (Date.parse(toDatePicker.getDate()) < Date.parse(nextDate)) {
+          toDatePicker.setDate(nextDate);
+        } else {
+          instance.state.set("beforeDate", this.getDate());
+        }
+      }
+    });
+    fromDatePicker.setMaxDate(new Date());
+    toDatePicker.setMaxDate(new Date());
+    fromDatePicker.setDate(new Date());
+    toDatePicker.setDate(fromDatePicker.getDate());
   });
-  fromDatePicker.setMaxDate(new Date());
-  toDatePicker.setMaxDate(new Date());
-  fromDatePicker.setDate(new Date());
-  toDatePicker.setDate(fromDatePicker.getDate());
-});
 
 Template.actionableAnalytics.helpers({
+
+  /**
+   * Gets all orders (cancelled and successful)
+   *
+   * @returns {number} - returns only the successful orders
+   */
   ordersPlaced() {
     const instance = Template.instance();
     const orders = instance.state.get("ordersPlaced");
     return orders - Template.instance().state.get("ordersCancelled");
   },
+
+  /**
+   * @returns {string} - returns a properly (comma) formatted price
+   */
   totalSales() {
     const instance = Template.instance();
     return formatPriceString(instance.state.get("totalSales"));
   },
+
+  /**
+   * @returns {number} - returns the total items purchased
+   */
   totalItemsPurchased() {
     const instance = Template.instance();
     return instance.state.get("totalItemsPurchased");
   },
+
+  /**
+   * @returns {string} - returns a properly formatted total shipping cost
+   */
   totalShippingCost() {
     const instance = Template.instance();
     return formatPriceString(instance.state.get("totalShippingCost"));
   },
+
+  /**
+   * @returns {string} - returns a properly formatted total daily sales
+   */
   salesPerDay() {
     const instance = Template.instance();
     return formatPriceString(instance.state.get("salesPerDay"));
   },
+
+  /**
+   * @returns {object} - orders and returns best selling products
+   */
   bestSelling() {
     const products = [];
     const instance = Template.instance();
@@ -207,6 +250,10 @@ Template.actionableAnalytics.helpers({
       "desc"
     );
   },
+
+  /**
+   * @returns {object} - returns and orders all products
+   */
   topEarning() {
     const products = [];
     const instance = Template.instance();
@@ -224,6 +271,10 @@ Template.actionableAnalytics.helpers({
       "desc"
     );
   },
+
+  /**
+   * @returns {object} - returns and orders all statements
+   */
   statements() {
     const statements = [];
     const instance = Template.instance();
@@ -239,6 +290,10 @@ Template.actionableAnalytics.helpers({
       "desc"
     );
   },
+
+  /**
+   * @returns {object} - orders info
+   */
   orders() {
     const instance = Template.instance();
     const orders = instance.state.get("ordersAnalytics");
@@ -253,6 +308,10 @@ Template.actionableAnalytics.helpers({
       "desc"
     );
   },
+
+  /**
+   * @returns {object} - products info
+   */
   products() {
     const instance = Template.instance();
     const productsAnalytics = instance.state.get("productsAnalytics");
@@ -261,6 +320,10 @@ Template.actionableAnalytics.helpers({
       "desc"
     );
   },
+
+  /**
+   * @returns {number} - cancelled orders
+   */
   ordersCancelled() {
     return Template.instance().state.get("ordersCancelled");
   }

@@ -16,22 +16,27 @@ beforeEach(function () {
 });
 
 describe("simple login test", function () {
-  it("verify user is able to login - and verifies user name in dropdown", function () {
+  it("verify that actionable analytics are generated", function () {
     const eleMap = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-map.yml", "utf8"));
     const eleIds = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-ids.yml", "utf8"));
 
     // default to process env if we've got that
     const adminEmail = process.env.REACTION_EMAIL;
     const adminPassword = process.env.REACTION_AUTH;
-    const adminUserName = process.env.REACTION_USER;
 
-    browser.pause("5000");
+    browser.waitForExist(eleMap.login_dropdown_btn);
     browser.click(eleMap.login_dropdown_btn);
-    browser.pause(5000);
+    browser.waitForExist(".form-control");
     browser.setValue(getId.retId(eleIds.login_email_fld_id), adminEmail);
     browser.setValue(getId.retId(eleIds.login_pw_fld_id), adminPassword);
     browser.click(eleMap.login_btn);
-    browser.pause("5000");
-    expect(browser.getText("#logged-in-display-name")).to.equal(adminUserName);
+    browser.waitForExist(eleMap.dashboard);
+    browser.click(eleMap.dashboard);
+    browser.waitForExist(eleMap.analytics);
+    browser.click(eleMap.analytics);
+    browser.waitForExist(".ordersPlaced", "5000");
+    browser.waitForExist(".itemsSold", "5000");
+    expect(browser.getText(".ordersPlaced")).to.contain("1");
+    expect(browser.getText(".itemsSold")).to.contain("8");
   });
 });
