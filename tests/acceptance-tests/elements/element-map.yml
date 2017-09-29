@@ -106,7 +106,7 @@ star_click: "[class='stars-rating']"
 # order confirmation page
 thank_you_txt: "h3 > span"
 
-account_dropdown: "#accounts"
+account_dropdown: ".circular-icon"
 dashboard_dropdown: "#dropdown-apps-dashboard"
 manage_static_page: "(//h3[@class='title'])[5]"
 created_page: "(//a[@id='About-Page'])"
