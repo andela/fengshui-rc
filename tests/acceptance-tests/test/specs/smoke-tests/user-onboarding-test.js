@@ -10,7 +10,7 @@ beforeEach(function () {
 });
 
 describe("User", function () {
-  xit("should be able to click on the faqs button see the faqs page", function () {
+  it("should be able to click on the faqs button see the faqs page", function () {
     browser.waitForExist(".faqs-button", "5000");
     browser.waitForExist("#faqs", "5000");
     browser.click("#faqs");

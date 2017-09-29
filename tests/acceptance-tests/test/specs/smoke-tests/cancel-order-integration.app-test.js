@@ -14,7 +14,7 @@ beforeEach(function () {
 });
 
 describe("User", function () {
-  xit("Should be able to cancel order", function () {
+  it("Should be able to cancel order", function () {
     const eleMap = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-map.yml", "utf8"));
     const eleIds = yaml.safeLoad(fs.readFileSync("./tests/acceptance-tests/elements/element-ids.yml", "utf8"));
 

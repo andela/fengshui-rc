@@ -1,0 +1,48 @@
+<template name="searchFilter">
+  <div class="hidden" id="searchFilter">
+    <div class="container customContainer">
+      <div class="row">
+
+        <div class="col-md-6">
+          <label class="transform">Price</label>
+          <div class="rui select">
+            <select id="price-filter">
+               <option value="null" selected disabled>Filter by price</option>
+               <option value="all">All prices</option>
+               <option id="firstPrice" value="0-3590">Below ₦3,590</option>
+               <option value="3590-19745">₦3,590 - ₦19,745</option>
+               <option value="19745-35900">₦19,745 - ₦35,900</option>
+               <option value="35900-179500">₦35,900 - ₦179,500</option>
+               <option value="179500-359000">₦179,500 - ₦359,000</option>
+               <option value="359000-above">Above ₦359,000</option>
+             </select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="transform">Vendor</label>
+          <div class="rui select">
+            <select id="brand-filter">
+               <option value="null" selected disabled>Filter by vendor</option>
+               <option value="all">All vendors</option>
+                {{#each brand in getBrands productSearchResults }}
+               <option value="{{brand}}">{{brand}}</option>
+               {{/each}}
+             </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="sortRelevance">
+  <div class="sorts" id="sortRelevance">
+    <strong style="color: #fff">Sort by:&nbsp;</strong>
+    <select id="sort-value">
+               <option value="null"><strong>Most Popular</strong></option>
+               <option value="ASC"><strong>Lowest price</strong></option>
+               <option value="DESC"><strong>Highest price</strong></option>
+       </select>
+  </div>
+</template>

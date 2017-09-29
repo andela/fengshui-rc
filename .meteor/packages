@@ -108,3 +108,6 @@ themeteorchef:commonmark
 templating-tools@1.1.2
 pauldowman:dotenv
 yuukan:streamy
+
+mrt:moment
+richsilv:pikaday

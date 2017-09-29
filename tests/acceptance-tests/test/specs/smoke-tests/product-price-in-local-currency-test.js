@@ -10,7 +10,7 @@ beforeEach(function () {
 });
 
 describe("Product price display", function () {
-  xit("should display product in users local currency", function () {
+  it("should display product in users local currency", function () {
     browser.waitForExist(".rui", "5000");
     browser.waitForExist("#product-title", "5000");
     browser.waitForExist(".currency-symbol", "10000");
